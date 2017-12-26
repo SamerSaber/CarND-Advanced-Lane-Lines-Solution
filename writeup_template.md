@@ -22,10 +22,11 @@ The goals / steps of this project are the following:
 [image1]: ./writeup_data/figure_cam_calib.png "Undistorted"
 [image2]: ./writeup_data/figure_undistorted_frame.png  "Road Transformed"
 [image3]: ./writeup_data/figure_preprocessing.png "Binary Example"
-[image4]: ./writeup_data/figure_prespective_transform.png"Warp Example"
-[image5]: ./writeup_data/figure_line_extraction.png"Fit Visual"
-[image6]: ./writeup_data/figure_output.png"Output"
+[image4]: ./writeup_data/figure_prespective_transform.png "Warp Example"
+[image5]: ./writeup_data/figure_line_extraction.png "Fit Visual"
+[image6]: ./writeup_data/figure_output.png "Output"
 [video1]: ./test_videos_output/project_video.mp4 "Video"
+
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
