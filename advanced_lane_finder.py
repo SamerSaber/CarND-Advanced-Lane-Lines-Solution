@@ -10,7 +10,7 @@ def process_frame(frame, DebugImage = False):
     
     cv2.imwrite("lastframe.jpg", frame)
     #undistort the frame
-    frame = camera_calibration.undistort(frame, cam_mtx, distortion)
+    frame = camera_calibration.undistort(frame, cam_mtx, distortion, DebugImage)
     
     bin_image = preprocessing.process(frame, DebugImage)
     #prespective transformation
@@ -48,7 +48,7 @@ def process_frame(frame, DebugImage = False):
     # Combine the result with the original image
     result = cv2.addWeighted(frame, 1, newwarp, 0.3, 0)
     if DebugImage:
-        plt.imshow(result)
+        plt.imshow(cv2.cvtColor(result, cv2.COLOR_BGR2RGB))
         plt.show()
     
     return result
@@ -57,12 +57,12 @@ def process_frame(frame, DebugImage = False):
 
 if __name__ == '__main__':
     
-    static_image = False
+    static_image = True
     print ("Calibrating the camera....")
     cam_mtx, distortion = camera_calibration.calibrate('./camera_cal')
     if static_image:
         #Calibrate the camera 
-        frame = cv2.imread('./lastframe.jpg')
+        frame = cv2.imread('./test_images/straight_lines1.jpg')
         
         process_frame(frame, True)
         

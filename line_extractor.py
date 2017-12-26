@@ -102,7 +102,6 @@ def extract(binary_warped , Debug_Image = False):
     
     calcCurvature(left_fitx , right_fitx , ploty)
     
-    return left_fitx , right_fitx , ploty
     
     if Debug_Image:
         
@@ -113,6 +112,7 @@ def extract(binary_warped , Debug_Image = False):
         plt.ylim(720, 0)
         plt.show()
     
+    return left_fitx , right_fitx , ploty
     
     
 if __name__ == '__main__':

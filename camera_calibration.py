@@ -1,6 +1,7 @@
 import cv2
 import glob
 import numpy as np 
+import matplotlib.pyplot as plt
 def calibrate (path , drawCorners = False):
     calibration_images = sorted(glob.glob(path+'/*.jpg'))
     objPoints = []
@@ -36,9 +37,16 @@ def undistort (image, cam_mtx, distortion, debug_image = False):
     dst = cv2.undistort(image, cam_mtx, distortion, None, cam_mtx)
     
     if debug_image:
-        cv2.imshow('distorted', image)
-        cv2.imshow('undistorted', dst)
-        cv2.waitKey(0)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
+        ax1.set_title('distorted')
+        ax1.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        
+        ax2.set_title('undistorted')
+        ax2.imshow(cv2.cvtColor(dst, cv2.COLOR_BGR2RGB), cmap='gray')
+        
+        plt.show()
+        
+       
         
     return dst
     

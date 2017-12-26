@@ -52,16 +52,14 @@ def process(image , Debug_Image = False):
         #cv2.imshow('color_binary',color_binary)
         #cv2.imshow('combined_binary', combined_binary)
         #cv2.waitKey(0)
-        f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(20,10))
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
         ax1.set_title('Stacked thresholds')
         ax1.imshow(color_binary)
         
         ax2.set_title('Combined S channel and gradient thresholds')
         ax2.imshow(combined_binary, cmap='gray')
         
-        ax3.set_title('mask')
-        ax3.imshow(mask, cmap='gray')
-        plt.show()
+    
 
 
     return combined_binary

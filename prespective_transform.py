@@ -14,8 +14,8 @@ def transform (image , src_pts, dst_pts, Debug_image = False):
         ax1.set_title('warped')
         ax1.imshow(warped, cmap='gray')
         
-        ax2.set_title('reversed')
-        ax2.imshow(reversed, cmap='gray')
+        ax2.set_title('original')
+        ax2.imshow(image, cmap='gray')
         plt.show()
 
         
