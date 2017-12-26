@@ -19,7 +19,7 @@ def process(image , Debug_Image = False):
     scaled_sobel = np.uint8(255*abs_sobelx/np.max(abs_sobelx))
     
     # Threshold x gradient
-    thresh_min = 20
+    thresh_min = 45
     thresh_max = 100
     sxbinary = np.zeros_like(scaled_sobel)
     sxbinary[(scaled_sobel >= thresh_min) & (scaled_sobel <= thresh_max)] = 1
@@ -40,10 +40,10 @@ def process(image , Debug_Image = False):
 
     mask = np.zeros_like(combined_binary)
     region_of_interest_vertices = np.int32(
-                        [[180  , 700],
-                         [1111 , 700],
-                         [726  , 460],
-                          [562  , 460]])
+                        [[80  , 700],
+                         [1211 , 700],
+                         [826  , 460],
+                          [462  , 460]])
     
     cv2.fillPoly(mask, [region_of_interest_vertices], 1)
     combined_binary = cv2.bitwise_and(combined_binary, mask)
@@ -52,12 +52,15 @@ def process(image , Debug_Image = False):
         #cv2.imshow('color_binary',color_binary)
         #cv2.imshow('combined_binary', combined_binary)
         #cv2.waitKey(0)
-        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
+        f, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(20,10))
         ax1.set_title('Stacked thresholds')
         ax1.imshow(color_binary)
         
         ax2.set_title('Combined S channel and gradient thresholds')
         ax2.imshow(combined_binary, cmap='gray')
+        
+        ax3.set_title('mask')
+        ax3.imshow(mask, cmap='gray')
         plt.show()
 
 

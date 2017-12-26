@@ -8,6 +8,7 @@ import numpy as np
 from moviepy.editor import VideoFileClip
 def process_frame(frame, DebugImage = False):
     
+    cv2.imwrite("lastframe.jpg", frame)
     #undistort the frame
     frame = camera_calibration.undistort(frame, cam_mtx, distortion)
     
@@ -46,23 +47,9 @@ def process_frame(frame, DebugImage = False):
     newwarp = cv2.warpPerspective(color_warp, Minv, (frame.shape[1], frame.shape[0])) 
     # Combine the result with the original image
     result = cv2.addWeighted(frame, 1, newwarp, 0.3, 0)
-    plt.imshow(result)
-#     plt.show()
-#     if DebugImage:
-#         
-#         
-#         f, (ax1, ax2 , ax3) = plt.subplots(1, 3, figsize=(20,10))
-#         ax1.set_title('mask')
-#         ax1.imshow(mask, cmap='gray')
-#         
-#         ax2.set_title('bin_image')
-#         ax2.imshow(bin_image, cmap='gray')
-#         
-#         ax3.set_title('warped')
-#         ax3.imshow(warped, cmap='gray')
-#         plt.savefig("warped.jpg")
-#         plt.show()
-    
+    if DebugImage:
+        plt.imshow(result)
+        plt.show()
     
     return result
 
@@ -70,11 +57,12 @@ def process_frame(frame, DebugImage = False):
 
 if __name__ == '__main__':
     
-    static_image = True
+    static_image = False
+    print ("Calibrating the camera....")
     cam_mtx, distortion = camera_calibration.calibrate('./camera_cal')
     if static_image:
         #Calibrate the camera 
-        frame = cv2.imread('./test_images/test1.jpg')
+        frame = cv2.imread('./lastframe.jpg')
         
         process_frame(frame, True)
         
@@ -82,8 +70,8 @@ if __name__ == '__main__':
         
     
         white_output = './test_videos_output/project_video.mp4'
-        
         clip1 = VideoFileClip("./project_video.mp4")
+#         clip1 = VideoFileClip("./project_video.mp4").subclip(40,50)
         
         #clip1 = VideoFileClip("test_videos/solidWhiteRight.mp4")
         white_clip = clip1.fl_image(process_frame) #NOTE: this function expects color images!!
