@@ -8,7 +8,7 @@ import numpy as np
 from moviepy.editor import VideoFileClip
 def process_frame(frame, DebugImage = False):
     
-    cv2.imwrite("lastframe.jpg", frame)
+    
     #undistort the frame
     frame = camera_calibration.undistort(frame, cam_mtx, distortion, DebugImage)
     
@@ -28,7 +28,7 @@ def process_frame(frame, DebugImage = False):
     warped , M, Minv = prespective_transform.transform(bin_image, src_pts, dst_pts, DebugImage)
     
     #Extract the lane lines
-    left_fitx , right_fitx , ploty = line_extractor.extract(warped, DebugImage)
+    left_fitx , right_fitx , ploty , l_curve, r_curve= line_extractor.extract(warped, DebugImage)
     
     #visualize the output
     # Create an image to draw the lines on
@@ -47,8 +47,27 @@ def process_frame(frame, DebugImage = False):
     newwarp = cv2.warpPerspective(color_warp, Minv, (frame.shape[1], frame.shape[0])) 
     # Combine the result with the original image
     result = cv2.addWeighted(frame, 1, newwarp, 0.3, 0)
+    
+    ################################################################
+    ############# Vehicle offset calculations ######################
+    
+    camera_position = frame.shape[1]/2
+    lane_center = (right_fitx[719] + left_fitx[719])/2
+    center_offset = abs(camera_position - lane_center) * (3.7 / (left_fitx[719] - right_fitx[719]))
+    print ("center_offset = "+str(center_offset))
+    
+    ################################################################
+    ############# Write the output values ##########################
+    message1 = "L_CURVE = "+str(l_curve)
+    message2 = "R_CURVE = "+str(r_curve)
+    message3 = "Center_Offset = "+str(center_offset)
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    cv2.putText(result,message1,(10,500), font, 1, (255,120,120), 1, cv2.LINE_AA)
+    cv2.putText(result,message2,(10,550), font, 1, (255,0,120), 1, cv2.LINE_AA)
+    cv2.putText(result,message3,(10,600), font, 1, (255,120,0), 1, cv2.LINE_AA)
+    
     if DebugImage:
-        plt.imshow(cv2.cvtColor(result, cv2.COLOR_BGR2RGB))
+        plt.imshow(result)
         plt.show()
     
     return result
@@ -57,13 +76,13 @@ def process_frame(frame, DebugImage = False):
 
 if __name__ == '__main__':
     
-    static_image = True
+    static_image = False
     print ("Calibrating the camera....")
     cam_mtx, distortion = camera_calibration.calibrate('./camera_cal')
     if static_image:
         #Calibrate the camera 
-        frame = cv2.imread('./test_images/straight_lines1.jpg')
-        
+        frame = cv2.imread('./test_images/test1.jpg')
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         process_frame(frame, True)
         
     else:

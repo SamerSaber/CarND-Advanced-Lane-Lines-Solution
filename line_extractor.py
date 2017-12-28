@@ -17,7 +17,7 @@ def calcCurvature(left_fitx , right_fitx , ploty):
     right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
     # Now our radius of curvature is in meters
     print(left_curverad, 'm', right_curverad, 'm')
-    return
+    return left_curverad , right_curverad
 
 def extract(binary_warped , Debug_Image = False):
     # Assuming you have created a warped binary image called "binary_warped"
@@ -100,7 +100,7 @@ def extract(binary_warped , Debug_Image = False):
     out_img[nonzeroy[left_lane_inds], nonzerox[left_lane_inds]] = [255, 0, 0]
     out_img[nonzeroy[right_lane_inds], nonzerox[right_lane_inds]] = [0, 0, 255]
     
-    calcCurvature(left_fitx , right_fitx , ploty)
+    l_curve,r_curve = calcCurvature(left_fitx , right_fitx , ploty)
     
     
     if Debug_Image:
@@ -112,7 +112,7 @@ def extract(binary_warped , Debug_Image = False):
         plt.ylim(720, 0)
         plt.show()
     
-    return left_fitx , right_fitx , ploty
+    return left_fitx , right_fitx , ploty, l_curve,r_curve
     
     
 if __name__ == '__main__':

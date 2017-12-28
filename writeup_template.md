@@ -122,7 +122,7 @@ I implemented this step in advanced_lane_finder.py in the process_frame()
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 video provided in this repository in (./test_videos_output/project_video.mp4)
-![alt text][video1]
+
 ---
 
 ### Discussion

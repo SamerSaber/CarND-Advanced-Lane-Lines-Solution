@@ -39,10 +39,10 @@ def undistort (image, cam_mtx, distortion, debug_image = False):
     if debug_image:
         f, (ax1, ax2) = plt.subplots(1, 2, figsize=(20,10))
         ax1.set_title('distorted')
-        ax1.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+        ax1.imshow(image)
         
         ax2.set_title('undistorted')
-        ax2.imshow(cv2.cvtColor(dst, cv2.COLOR_BGR2RGB), cmap='gray')
+        ax2.imshow(dst)
         
         plt.show()
         
