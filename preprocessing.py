@@ -70,6 +70,10 @@ def process(image , Debug_Image = False):
     
     cv2.fillPoly(mask, [region_of_interest_vertices], 1)
     combined_binary = cv2.bitwise_and(combined_binary, mask)
+    
+#     kernel = np.ones((3,3),np.uint8)
+#     combined_binary = cv2.morphologyEx(combined_binary, cv2.MORPH_OPEN, kernel)
+#     combined_binary = cv2.morphologyEx(combined_binary, cv2.MORPH_CLOSE, kernel)
     # Plotting thresholded images
     if Debug_Image:
         #cv2.imshow('color_binary',color_binary)

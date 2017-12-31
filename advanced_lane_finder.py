@@ -6,6 +6,8 @@ import line_extractor
 import matplotlib.pyplot as plt
 import numpy as np
 from moviepy.editor import VideoFileClip
+
+count = 0
 def process_frame(frame, DebugImage = False):
     
     
@@ -65,7 +67,10 @@ def process_frame(frame, DebugImage = False):
     cv2.putText(result,message1,(10,500), font, 1, (255,120,120), 1, cv2.LINE_AA)
     cv2.putText(result,message2,(10,550), font, 1, (255,0,120), 1, cv2.LINE_AA)
     cv2.putText(result,message3,(10,600), font, 1, (255,120,0), 1, cv2.LINE_AA)
-    
+    global count
+    cv2.imwrite("./input/"+str(count)+".png",cv2.cvtColor(frame,cv2.COLOR_BGR2RGB))
+    cv2.imwrite("./output/"+str(count)+".png",cv2.cvtColor(result,cv2.COLOR_BGR2RGB))
+    count += 1
     if DebugImage:
         plt.imshow(result)
         plt.show()
@@ -76,12 +81,12 @@ def process_frame(frame, DebugImage = False):
 
 if __name__ == '__main__':
     
-    static_image = False
+    static_image = True
     print ("Calibrating the camera....")
     cam_mtx, distortion = camera_calibration.calibrate('./camera_cal')
     if static_image:
         #Calibrate the camera 
-        frame = cv2.imread('./test_images/test1.jpg')
+        frame = cv2.imread('./input/1023.png')
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         process_frame(frame, True)
         
