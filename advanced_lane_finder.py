@@ -81,12 +81,12 @@ def process_frame(frame, DebugImage = False):
 
 if __name__ == '__main__':
     
-    static_image = True
+    static_image = False
     print ("Calibrating the camera....")
     cam_mtx, distortion = camera_calibration.calibrate('./camera_cal')
     if static_image:
         #Calibrate the camera 
-        frame = cv2.imread('./input/1023.png')
+        frame = cv2.imread('./input/992.png')
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         process_frame(frame, True)
         
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     
         white_output = './test_videos_output/project_video.mp4'
         clip1 = VideoFileClip("./project_video.mp4")
-#         clip1 = VideoFileClip("./project_video.mp4").subclip(40,50)
+#         clip1 = VideoFileClip("./project_video.mp4").subclip(0,10)
         
         #clip1 = VideoFileClip("test_videos/solidWhiteRight.mp4")
         white_clip = clip1.fl_image(process_frame) #NOTE: this function expects color images!!
